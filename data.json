@@ -1,0 +1,14 @@
+[
+  {
+    "username": "jub0bs",
+    "platform": "Reddit",
+    "valid": false,
+    "available": false
+  },
+  {
+    "username": "jub0bs",
+    "platform": "GitHub",
+    "valid": true,
+    "available": false
+  }
+]
