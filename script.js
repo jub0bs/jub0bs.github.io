@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const displayResults = (data) => {
         resultsList.innerHTML = data.length
-            ? data.map(item => `<li><strong>${htmlEncode(item.platform)}</strong><br><br>${htmlEncode(item.valid)}</li>`).join('')
+            ? data.map(item => `<li><strong>${htmlEncode(item.platform)}</strong><br><br>Valid: ${htmlEncode(item.valid)}<br>Available: ${htmlEncode(item.available)}</li>`).join('')
             : '<li>No results found</li>';
     };
 
