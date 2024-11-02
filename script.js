@@ -35,8 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    const displayBool = (b) => {
+    const displayValid = (b) => {
         return b ? '✅' : '❌';
+    }
+
+    const displayAvail = (err, b) => {
+        return err ? '⚠️' : (b ? '✅' : '❌');
     }
 
     const runSearch = async (username) => {
@@ -46,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsList.innerHTML = data.length
         ? data
         .sort((a,b) => a.platform < b.platform)
-        .map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
+        .map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayValid(item.valid))}</td><td>${htmlEncode(displayAvail(item.error, item.available))}</td></tr>`).join('')
         : '';
         window.location.hash = encodeURIComponent(username);
     };
