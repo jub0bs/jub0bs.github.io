@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const displayBool = (b) => {
-        b ? "✅" : "❌";
+        return b === 'true' ? '✅' : '❌';
     }
 
     /**
