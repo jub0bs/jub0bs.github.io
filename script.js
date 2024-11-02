@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         searchInput.addEventListener('input', debounce(() => {
+            resultsList.innerHTML = '';
             const username = searchInput.value;
             runSearch(username);
             window.location.hash = encodeURIComponent(username);
