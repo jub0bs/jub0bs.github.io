@@ -2,13 +2,13 @@
   {
     "username": "jub0bs",
     "platform": "Reddit",
-    "valid": "❌",
-    "available": "❌"
+    "valid": true,
+    "available": false
   },
   {
     "username": "jub0bs",
     "platform": "GitHub",
-    "valid": "✅",
-    "available": "❌"
+    "valid": true,
+    "available": false
   }
 ]
