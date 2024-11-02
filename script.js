@@ -40,13 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const runSearch = async (username) => {
-        const url = 'https://api.github.com/repos/jub0bs/jub0bs.github.io/contents/data.json?ref=main';
-        const opts = {
-            headers: {
-                'Accept': 'application/vnd.github.v3.raw'
-            }
-        }
-        const response = await fetch(url, opts);
+        const url = `http://localhost:8080/check?username=${encodeURIComponent(username)}`;
+        const response = await fetch(url);
         const data = await response.json();
         resultsList.innerHTML = data.length
         ? data
