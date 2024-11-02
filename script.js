@@ -64,6 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
         displayResults(results);
     };
 
+    const runSearch = async (username) => {
+        const url = 'https://api.github.com/repos/jub0bs/jub0bs.github.io/contents/data.json?ref=main';
+        const opts = {
+            headers: {
+                'Accept': 'application/vnd.github.v3.raw'
+            }
+        }
+        const response = await fetch(url, opts);
+        const data = await response.json();
+        resultsList.innerHTML = data.length
+        ? data.map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
+        : '';
+        window.location.hash = encodeURIComponent(username);
+    };
+
     /**
      * Initializes the application by fetching data and setting up event listeners.
      */
@@ -92,6 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300));
     };
 
+    const initialize2 = async () => {
+        try {
+            if (window.location.hash) {
+                const username = decodeURIComponent(window.location.hash.substring(1));
+                searchInput.value = username;
+                runSearch(username);
+            }
+        } catch (error) {
+            console.error('Error fetching TSV data:', error);
+        }
+
+        searchInput.addEventListener('input', debounce(() => {
+            const username = searchInput.value;
+            runSearch(username);
+            window.location.hash = encodeURIComponent(username);
+        }, 300));
+    };
+
     // Start the application
-    initialize();
+    initialize2();
 });
