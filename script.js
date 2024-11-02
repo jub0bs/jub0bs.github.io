@@ -35,14 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
+    const displayBool = (b) => {
+        b ? "✅" : "❌";
+    }
+
     /**
      * Displays the search results in the results list.
      * @param {Array} data - The data to display.
      */
     const displayResults = (data) => {
         resultsList.innerHTML = data.length
-            ? data.map(item => `<li><strong>${htmlEncode(item.platform)}</strong><br><br>Valid: ${htmlEncode(item.valid)}<br>Available: ${htmlEncode(item.available)}</li>`).join('')
-            : '<li>No results found</li>';
+            ? data.map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
+            : '';
     };
 
     /**

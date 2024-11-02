@@ -68,7 +68,17 @@
     <h1>namecheck</h1>
     <textarea id="search" placeholder="Enter a username to check..." autofocus></textarea>
 
-    <ul id="results"></ul>
+    <table>
+        <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Valid</th>
+              <th scope="col">Available</th>
+            </tr>
+          </thead>
+          <tbody id="results">
+          </tbody>
+    </table>
 
     <script src="script.js"></script>
 
