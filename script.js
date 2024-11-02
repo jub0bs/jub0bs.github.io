@@ -39,33 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return b ? '✅' : '❌';
     }
 
-    /**
-     * Displays the search results in the results list.
-     * @param {Array} data - The data to display.
-     */
-    const displayResults = (data) => {
-        resultsList.innerHTML = data.length
-            ? data
-            .sort((a,b) => a.platform < b.platform)
-            .map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
-            : '';
-    };
-
-    /**
-     * Applies the search logic based on the query.
-     * @param {string} query - The search query.
-     */
-    const applySearch = (query) => {
-        const trimmedQuery = query.trim().toLowerCase();
-        if (!trimmedQuery) {
-            resultsList.innerHTML = '';
-            return;
-        }
-
-        const results = tsvData;
-        displayResults(results);
-    };
-
     const runSearch = async (username) => {
         const url = 'https://api.github.com/repos/jub0bs/jub0bs.github.io/contents/data.json?ref=main';
         const opts = {
@@ -76,40 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(url, opts);
         const data = await response.json();
         resultsList.innerHTML = data.length
-        ? data.map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
+        ? data
+        .sort((a,b) => a.platform < b.platform)
+        .map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
         : '';
         window.location.hash = encodeURIComponent(username);
     };
 
-    /**
-     * Initializes the application by fetching data and setting up event listeners.
-     */
     const initialize = async () => {
-        try {
-            const response = await fetch('https://api.github.com/repos/jub0bs/jub0bs.github.io/contents/data.json?ref=main', {
-                headers: { 'Accept': 'application/vnd.github.v3.raw' }
-            });
-            const data = await response.json();
-            
-            tsvData = data;
-
-            if (window.location.hash) {
-                const query = decodeURIComponent(window.location.hash.substring(1));
-                searchInput.value = query;
-                applySearch(query);
-            }
-        } catch (error) {
-            console.error('Error fetching TSV data:', error);
-        }
-
-        searchInput.addEventListener('input', debounce(() => {
-            const query = searchInput.value;
-            applySearch(query);
-            window.location.hash = encodeURIComponent(query);
-        }, 300));
-    };
-
-    const initialize2 = async () => {
         try {
             if (window.location.hash) {
                 const username = decodeURIComponent(window.location.hash.substring(1));
@@ -129,5 +76,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Start the application
-    initialize2();
+    initialize();
 });
