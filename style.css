@@ -5,12 +5,11 @@ body {
     margin: auto;
 }
 
-textarea {
+input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     margin-bottom: 20px;
-    resize: vertical; /* Optional: Allow users to resize the textarea vertically */
 }
 
 ul {
