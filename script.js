@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const displayResults = (data) => {
         resultsList.innerHTML = data.length
-            ? data.map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
+            ? data
+            .sort((a,b) => a.platform < b.platform)
+            .map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayBool(item.valid))}</td><td>${htmlEncode(displayBool(item.available))}</td></tr>`).join('')
             : '';
     };
 
