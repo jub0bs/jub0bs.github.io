@@ -5,10 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
     const resultsList = document.getElementById('results');
 
-    /**
-     * Data variables
-     */
-    let tsvData = [];
     let debounceTimeout;
 
     /**
@@ -47,12 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = `http://localhost:8080/check?username=${encodeURIComponent(username)}`;
         const response = await fetch(url);
         const data = await response.json();
-        resultsList.innerHTML = data.length
-        ? data
+        resultsList.innerHTML = data.results.length
+        ? data.results
         .sort((a,b) => a.platform < b.platform)
         .map(item => `<tr><th scope="row">${htmlEncode(item.platform)}</th><td>${htmlEncode(displayValid(item.valid))}</td><td>${htmlEncode(displayAvail(item.error, item.available))}</td></tr>`).join('')
         : '';
-        window.location.hash = encodeURIComponent(username);
+        window.location.hash = encodeURIComponent(data.username);
     };
 
     const initialize = async () => {
