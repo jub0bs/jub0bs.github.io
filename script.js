@@ -40,7 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const runSearch = async (username) => {
-        const url = `http://localhost:8080/check?username=${encodeURIComponent(username)}`;
+        const params = new URLSearchParams(location.search);
+        let port;
+        try {
+            let raw = params.get("port");
+            if (!raw) {
+                port = "8080";
+            }
+            parseInt(raw);
+            port = raw;
+        } catch(e) {
+            alert("invalid port")
+            return
+        }
+        const url = `http://localhost:${port}/check?username=${encodeURIComponent(username)}`;
         const response = await fetch(url);
         const data = await response.json();
         resultsList.innerHTML = data.results.length
